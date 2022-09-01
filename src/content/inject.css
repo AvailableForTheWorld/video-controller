@@ -1,8 +1,28 @@
 .video-controller-container {
-    background-color: pink;
-    width: 100px;
-    height: 100px;
+    width: fit-content;
+    height: fit-content;
     position: absolute;
     top: 100px;
     left: 100px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+}
+.video-controller {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 4px 6px;
+}
+.video-controller #speed-text {
+    color: #ffffff;
+}
+.video-controller #control-operation {
+    display: flex;
+    gap: 4px;
+}
+.video-controller #control-operation > button {
+    border: 0;
+    background-color: rgba(100,100,100,0.8);
+    color: #ffffff;
 }
