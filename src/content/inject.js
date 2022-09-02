@@ -32,11 +32,11 @@ arrList.map((item,index)=>{
 })
 const operation = {
     faster: (target)=>{
-        videoList[0].playbackRate += 0.1
+        videoList[0].playbackRate = Math.round((videoList[0].playbackRate+0.1)*10)/10
         target.parentElement.parentElement.querySelector('.speed-text').innerText = videoList[0].playbackRate.toFixed(1)
     },
     slower: (target)=>{
-        videoList[0].playbackRate -= 0.1
+        videoList[0].playbackRate = Math.round((videoList[0].playbackRate-0.1)*100)/100
         target.parentElement.parentElement.querySelector('.speed-text').innerText = videoList[0].playbackRate.toFixed(1)
     },
     "fall-back": ()=>{
