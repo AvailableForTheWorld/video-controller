@@ -10,11 +10,11 @@ let speedText;
 const operation = {
     faster: ()=>{
         videoList[0].playbackRate += 0.1
-        speedText.innerText = videoList[0].playbackRate
+        speedText.innerText = videoList[0].playbackRate.toFixed(1)
     },
     slower: ()=>{
         videoList[0].playbackRate -= 0.1
-        speedText.innerText = videoList[0].playbackRate
+        speedText.innerText = videoList[0].playbackRate.toFixed(1)
     }
     
 }
