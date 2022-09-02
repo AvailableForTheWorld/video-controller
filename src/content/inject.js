@@ -27,6 +27,7 @@ arrList.map((item,index)=>{
     window.onload = ()=>{
         const controllerOperation = wrapper.querySelector('.control-operation')
         controllerOperation.addEventListener('click',handleClick)
+        controllerOperation.addEventListener('dblclick',stopProp)
     }
 })
 const operation = {
@@ -46,6 +47,10 @@ const operation = {
     }
 }
 
+const stopProp = (e)=>{
+    e.stopPropagation();
+}
 const handleClick = (e)=>{
+    e.stopPropagation();
     operation[e.target.dataset['op']](e.target);
 }
