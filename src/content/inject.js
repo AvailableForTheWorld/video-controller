@@ -5,6 +5,15 @@ var panel = {
         speed:1.0
     }
 }
+const videoList = document.getElementsByTagName('video')
+const operation = {
+    faster: ()=>{
+        videoList[0].playbackRate += 1.0
+    },
+    slower: ()=>{
+        videoList[0].playbackRate -= 1.0
+    }
+}
 const frg = document.createDocumentFragment();
 const boxTemplate = `
     <div class="video-controller">
@@ -23,5 +32,6 @@ document.body.appendChild(frg);
 const controllerOperation = document.getElementById('control-operation');
 const handleClick = (e)=>{
     console.log("eeeeee",e.target.dataset['op'])
+    operation[e.target.dataset['op']]();
 }
 controllerOperation.addEventListener('click',handleClick)
