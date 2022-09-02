@@ -28,18 +28,22 @@ arrList.map((item,index)=>{
 })
 const operation = {
     faster: (target)=>{
-        videoList[0].playbackRate = Math.round((videoList[0].playbackRate+0.1)*10)/10
+        const tar = target.parentElement.parentElement.parentElement.parentElement
+        tar.getElementsByTagName('video')[0].playbackRate = Math.round((videoList[0].playbackRate+0.1)*10)/10
         target.parentElement.parentElement.querySelector('.speed-text').innerText = videoList[0].playbackRate.toFixed(1)
     },
     slower: (target)=>{
-        videoList[0].playbackRate = Math.round((videoList[0].playbackRate-0.1)*100)/100
+        const tar = target.parentElement.parentElement.parentElement.parentElement
+        tar.getElementsByTagName('video')[0].playbackRate = Math.round((videoList[0].playbackRate-0.1)*100)/100
         target.parentElement.parentElement.querySelector('.speed-text').innerText = videoList[0].playbackRate.toFixed(1)
     },
-    "fall-back": ()=>{
-        videoList[0].currentTime -= 10;
+    "fall-back": (target)=>{
+        const tar = target.parentElement.parentElement.parentElement.parentElement
+        tar.getElementsByTagName('video')[0].currentTime -= 10;
     },
-    "fast-forward": ()=>{
-        videoList[0].currentTime += 10;
+    "fast-forward": (target)=>{
+        const tar = target.parentElement.parentElement.parentElement.parentElement
+        tar.getElementsByTagName('video')[0].currentTime += 10;
     }
 }
 
