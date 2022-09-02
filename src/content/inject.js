@@ -20,3 +20,8 @@ const boxTemplate = `
 wrapper.innerHTML = boxTemplate;
 frg.appendChild(wrapper);
 document.body.appendChild(frg);
+const controllerOperation = document.getElementById('control-operation');
+const handleClick = (e)=>{
+    console.log("eeeeee",e.target.dataset['op'])
+}
+controllerOperation.addEventListener('click',handleClick)
