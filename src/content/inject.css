@@ -15,11 +15,13 @@
     justify-content: center;
     gap: 10px;
     padding: 4px 6px;
+    user-select: none;
 }
 .video-controller .speed-text {
     min-width: 24px;
     text-align: center;
     color: #ffffff;
+    user-select: none;
 }
 .video-controller .control-operation {
     display: flex;
@@ -32,4 +34,11 @@
     background-color: rgba(100,100,100,0.8);
     color: #ffffff;
     border-radius: 4px;
+    user-select: none;
+}
+.video-controller .control-operation > button:hover {
+    background-color: rgba(80,80,80,0.8);
+}
+.video-controller .control-operation > button:active {
+    background-color: rgba(60,60,60,0.8);
 }
