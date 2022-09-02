@@ -1,9 +1,3 @@
-
-var panel = {
-    data: {
-        speed:1.0
-    }
-}
 const videoList = document.getElementsByTagName('video')
 const arrList = Array.from(videoList)
 arrList.map((item,index)=>{
@@ -12,7 +6,7 @@ arrList.map((item,index)=>{
     wrapper.classList.add("video-controller-container");
     const boxTemplate = `
         <div class="video-controller">
-            <div class="speed-text">${panel.data.speed.toFixed(1)}</div>
+            <div class="speed-text">${item.playbackRate.toFixed(1)}</div>
             <div class="control-operation video-controller-hide">
                 <button data-op="fall-back">«</button>
                 <button data-op="slower">-</button>
