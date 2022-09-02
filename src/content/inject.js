@@ -15,6 +15,12 @@ const operation = {
     slower: ()=>{
         videoList[0].playbackRate -= 0.1
         speedText.innerText = videoList[0].playbackRate.toFixed(1)
+    },
+    "fall-back": ()=>{
+        videoList[0].currentTime -= 10;
+    },
+    "fast-forward": ()=>{
+        videoList[0].currentTime += 10;
     }
     
 }
