@@ -34,7 +34,7 @@ const operation = {
     },
     slower: (target)=>{
         const tar = target.parentElement.parentElement.parentElement.parentElement
-        tar.getElementsByTagName('video')[0].playbackRate = Math.round((videoList[0].playbackRate-0.1)*100)/100
+        tar.getElementsByTagName('video')[0].playbackRate = Math.round((videoList[0].playbackRate-0.1)*10)/10
         target.parentElement.parentElement.querySelector('.speed-text').innerText = videoList[0].playbackRate.toFixed(1)
     },
     "fall-back": (target)=>{
