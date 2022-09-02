@@ -6,13 +6,17 @@ var panel = {
     }
 }
 const videoList = document.getElementsByTagName('video')
+let speedText;
 const operation = {
     faster: ()=>{
-        videoList[0].playbackRate += 1.0
+        videoList[0].playbackRate += 0.1
+        speedText.innerText = videoList[0].playbackRate
     },
     slower: ()=>{
-        videoList[0].playbackRate -= 1.0
+        videoList[0].playbackRate -= 0.1
+        speedText.innerText = videoList[0].playbackRate
     }
+    
 }
 const frg = document.createDocumentFragment();
 const boxTemplate = `
@@ -29,6 +33,7 @@ const boxTemplate = `
 wrapper.innerHTML = boxTemplate;
 frg.appendChild(wrapper);
 document.body.appendChild(frg);
+speedText = document.getElementById('speed-text')
 const controllerOperation = document.getElementById('control-operation');
 const handleClick = (e)=>{
     console.log("eeeeee",e.target.dataset['op'])
