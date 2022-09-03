@@ -34,10 +34,10 @@
         {
             "all_frames": true,
             "matches": ["http://*/*","https://*/*","file:///*"],
-            "js": ["./src/content/inject.js"],
+            "js": ["./src/content/modules/drap.js","./src/content/inject.js"],
             "css": ["./src/content/inject.css"]
         }
-    ],
+    ], 
     "permissions": ["storage","activeTab","scripting"],
     "options_page": "./src/options/options.html"
 }
