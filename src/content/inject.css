@@ -47,6 +47,25 @@
 .video-controller .video-controller-hide {
     display: none;
 }
+
+.time-list{
+    color:white;
+    position:absolute;
+    left: 0;
+    top: 20%;
+    max-height: 50%;
+    overflow-y: auto;
+    list-style: none;
+    background-color: rgba(0,0,0,0.5);
+    margin-left: 5px;
+    z-index: 999;
+}
+.time-list li {
+    margin: 4px 2px;
+}
+.time-list li button{
+    background-color: rgba(0, 0, 0, 0.2);
+}
 /* 公共隐藏展示方法 */
 .hide {
     opacity: 0;
