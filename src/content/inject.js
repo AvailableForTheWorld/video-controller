@@ -34,6 +34,7 @@ arrList.map((item,index)=>{
         const controllerOperation = wrapper.querySelector('.control-operation')
         controllerOperation.addEventListener('click',handleClick)
         controllerOperation.addEventListener('dblclick',stopProp)
+        dragPatch.patch(wrapper) // 非纯函数，修改了dom
 
         aside.addEventListener('click',goto)
         document.addEventListener('keyup', keyboard)
