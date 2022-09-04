@@ -2,7 +2,6 @@ const videoList = document.getElementsByTagName('video')
 const arrList = Array.from(videoList)
 const timeMap = new Set()
 arrList.map((item,index)=>{
-    console.log("video",index," is : ",item)
     const wrapper = document.createElement("div");
     const aside = document.createElement("div");
     wrapper.classList.add("video-controller-container");
@@ -25,7 +24,6 @@ arrList.map((item,index)=>{
     asideul.classList.add('time-list')
     aside.appendChild(asideul)
 
-    console.log("wrapper",wrapper,wrapper.querySelector('.control-operation'))
     item.parentElement.insertBefore(wrapper,item)
     item.parentElement.insertBefore(aside,item)
     window.onload = ()=>{
@@ -63,7 +61,6 @@ const operation = {
         let time = tar.getElementsByTagName('video')[0].currentTime
         timeMap.add(time)
         renderList()
-        console.log(timeMap)
     }
 }
 
@@ -72,7 +69,6 @@ const stopProp = (e)=>{
 }
 const handleClick = (e)=>{
     if(e.target=='font') return
-    console.log(e)
     e.stopPropagation();
     operation[e.target.dataset['op']](e.target);
 }
@@ -88,17 +84,14 @@ const hideControllerBtn = (e)=>{
 }
 const keyboard = (e)=>{
     if(e.keyCode=='68'){
-        // console.log('faster:',e)
         let video = document.getElementsByTagName('video')[0]
         operation.faster(video)
     }
     if(e.keyCode=='65'){
-        // console.log('slower:',e)
         let video = document.getElementsByTagName('video')[0]
         operation.slower(video)
     }
     if(e.keyCode=='83'){
-        // console.log('slower:',e)
         let video = document.getElementsByTagName('video')[0]
         operation.save(video)
     }
@@ -112,7 +105,7 @@ const renderList = ()=>{
     }
 }
 const goto=(e)=>{
-    console.log('跳转了',e)
+    e.stopPropagation();
     let video = document.getElementsByTagName('video')[0]
     // video.currentTime=e.target.innerText
     video.currentTime=formateSecond(e.target.innerText)
