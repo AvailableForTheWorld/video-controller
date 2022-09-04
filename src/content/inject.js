@@ -135,7 +135,7 @@ const renderSpeedList = (target)=>{
     const sessions = JSON.parse(sessionStorage.getItem('speed_list'));
     target.innerHTML = ''
     sessions.map((item)=>{
-        target.innerHTML += `<li><button>${item}</button><button class="delete-speed-time">×</button></li>`
+        target.innerHTML += `<li><button>${item}</button><button class="delete-speed-list">×</button></li>`
     })
 }
 const goto=(e)=>{
@@ -147,7 +147,7 @@ const goto=(e)=>{
         renderList()
      }
      else{
-        let video = document.getElementsByTagName('video')[0]
+        let video = c
         // video.currentTime=e.target.innerText
         video.currentTime=formateSecond(e.target.innerText)
      }
@@ -155,14 +155,15 @@ const goto=(e)=>{
 }
 const gotoSpeed = (e)=>{
     e.stopPropagation();
-    if(e.target.classList.contains("delete-speed-time")) {
+    if(e.target.classList.contains("delete-speed-list")) {
         const arr = JSON.parse(sessionStorage.getItem('speed_list')).filter((item)=> item!==e.target.previousSibling.innerText)
         sessionStorage.setItem('speed_list',JSON.stringify(arr));
         renderSpeedList(e.target.parentElement.parentElement);
     }
     else {
-        const video = e.target.parentElement.parentElement.parentElement.nextSibling;
+        const video = document.getElementsByTagName('video')[0];
         video.playbackRate = Number(e.target.innerText);
+        document.querySelector('.speed-text').innerText = e.target.innerText;
     }
 }
 const formateTime = (time)=>{
