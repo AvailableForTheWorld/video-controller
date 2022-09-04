@@ -80,6 +80,7 @@ const operation = {
     },
     "record-speed": (target)=>{
         const tar = target.parentElement.parentElement.parentElement.parentElement;
+        console.log("tar",tar)
         const sessions = JSON.parse(sessionStorage.getItem('speed_list'));
         let speedList = sessions?sessions:[];
         const item = tar.getElementsByTagName('video')[0].playbackRate.toFixed(1);
@@ -110,17 +111,21 @@ const hideControllerBtn = (e)=>{
     ele.classList.add('video-controller-hide')
 }
 const keyboard = (e)=>{
-    if(e.keyCode=='68'){
-        let video = document.getElementsByTagName('video')[0]
-        operation.faster(video)
+    if(e.keyCode===68){
+        const tar = document.querySelector('.control-operation').children[0];
+        operation.faster(tar)
     }
-    if(e.keyCode=='65'){
-        let video = document.getElementsByTagName('video')[0]
-        operation.slower(video)
+    else if(e.keyCode===65){
+        const tar = document.querySelector('.control-operation').children[0]
+        operation.slower(tar)
     }
-    if(e.keyCode=='83'){
-        let video = document.getElementsByTagName('video')[0]
-        operation.mark(video)
+    else if(e.keyCode===83){
+        const tar = document.querySelector('.control-operation').children[0]
+        operation.mark(tar)
+    }
+    else if(e.keyCode===90){
+        const tar = document.querySelector('.control-operation').children[0]
+        operation['record-speed'](tar)
     }
 }
 const renderList = ()=>{
