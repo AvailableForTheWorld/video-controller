@@ -16,7 +16,7 @@ function init () {
                     <button data-op="slower">-</button>
                     <button data-op="faster">+</button>
                     <button data-op="fast-forward">»</button>
-                    <button data-op="save">save</buttom>
+                    <button data-op="mark">mark</buttom>
                 </div>
             </div>
         `;
@@ -64,7 +64,7 @@ const operation = {
         const tar = target.parentElement.parentElement.parentElement.parentElement.getElementsByTagName('video')[0]
         tar.currentTime += 10;
     },
-    save: (target)=>{    
+    mark: (target)=>{    
         const tar = target.parentElement.parentElement.parentElement.parentElement.getElementsByTagName('video')[0]
         let time = formateSecond(formateTime(tar.currentTime))
         timeMap.add(time)
@@ -102,7 +102,7 @@ const keyboard = (e)=>{
     }
     if(e.keyCode=='83'){
         let video = document.getElementsByTagName('video')[0]
-        operation.save(video)
+        operation.mark(video)
     }
 }
 const renderList = ()=>{
