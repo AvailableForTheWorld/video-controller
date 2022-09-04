@@ -82,3 +82,11 @@
 .time-list li:hover .deletetime{
     display: inline-block;
 }
+
+.speed-list {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 999;
+}
