@@ -58,21 +58,24 @@
 .time-list{
     color:white;
     position:absolute;
-    left: 0;
-    top: 20%;
-    max-height: 50%;
-    overflow-y: auto;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
     list-style: none;
     background-color: rgba(0,0,0,0.5);
-    margin-left: 5px;
     z-index: 999;
 }
 .time-list li {
-    margin: 4px 2px;
+    display: flex;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    line-height: 26px;
 }
 .time-list li button{
+    font-size: 14px;
     background-color: transparent;
-    padding: 4px 4px;
+    padding: 4px 6px;
     color:white;
     border: 0;
 }
@@ -81,4 +84,40 @@
 }
 .time-list li:hover .deletetime{
     display: inline-block;
+    font-size: 18px;
+    display: block;
+}
+
+.speed-list {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 999;
+}
+.speed-list-ul {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.speed-list-ul li{
+    display: flex;
+    justify-content: center;
+}
+.speed-list-ul li button {
+    border: 0;
+    background-color: transparent;
+    color: white;
+    font-size: 14px;
+    padding: 4px 6px;
+}
+.speed-list-ul li .delete-speed-list {
+    opacity: 0;
+    font-size: 18px;
+}
+.speed-list-ul li:hover .delete-speed-list{
+    opacity: 1;
 }
