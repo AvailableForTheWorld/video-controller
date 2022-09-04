@@ -76,3 +76,9 @@
     color:white;
     border: 0;
 }
+.deletetime{
+    display: none;
+}
+.time-list li:hover .deletetime{
+    display: inline-block;
+}
