@@ -88,6 +88,11 @@ const operation = {
         }
         sessionStorage.setItem('speed_list',JSON.stringify(speedList))
         renderSpeedList(tar.querySelector('.speed-list-ul'))
+    },
+    reset: (target)=> {
+        const tar = target.parentElement.parentElement.parentElement.parentElement;
+        tar.getElementsByTagName('video')[0].playbackRate = 1.0;
+        tar.querySelector('.speed-text').innerText = "1.0"
     }
 }
 
@@ -110,17 +115,25 @@ const hideControllerBtn = (e)=>{
     ele.classList.add('video-controller-hide')
 }
 const keyboard = (e)=>{
-    if(e.keyCode=='68'){
-        let video = document.getElementsByTagName('video')[0]
-        operation.faster(video)
+    if(e.keyCode===68){
+        const tar = document.querySelector('.control-operation').children[0];
+        operation.faster(tar)
     }
-    if(e.keyCode=='65'){
-        let video = document.getElementsByTagName('video')[0]
-        operation.slower(video)
+    else if(e.keyCode===65){
+        const tar = document.querySelector('.control-operation').children[0]
+        operation.slower(tar)
     }
-    if(e.keyCode=='83'){
-        let video = document.getElementsByTagName('video')[0]
-        operation.mark(video)
+    else if(e.keyCode===83){
+        const tar = document.querySelector('.control-operation').children[0]
+        operation.mark(tar)
+    }
+    else if(e.keyCode===90){
+        const tar = document.querySelector('.control-operation').children[0]
+        operation['record-speed'](tar)
+    }
+    else if(e.keyCode===82){
+        const tar = document.querySelector('.control-operation').children[0]
+        operation['reset'](tar)
     }
 }
 const renderList = ()=>{
