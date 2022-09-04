@@ -80,7 +80,6 @@ const operation = {
     },
     "record-speed": (target)=>{
         const tar = target.parentElement.parentElement.parentElement.parentElement;
-        console.log("tar",tar)
         const sessions = JSON.parse(sessionStorage.getItem('speed_list'));
         let speedList = sessions?sessions:[];
         const item = tar.getElementsByTagName('video')[0].playbackRate.toFixed(1);
@@ -89,6 +88,11 @@ const operation = {
         }
         sessionStorage.setItem('speed_list',JSON.stringify(speedList))
         renderSpeedList(tar.querySelector('.speed-list-ul'))
+    },
+    reset: (target)=> {
+        const tar = target.parentElement.parentElement.parentElement.parentElement;
+        tar.getElementsByTagName('video')[0].playbackRate = 1.0;
+        tar.querySelector('.speed-text').innerText = "1.0"
     }
 }
 
@@ -126,6 +130,10 @@ const keyboard = (e)=>{
     else if(e.keyCode===90){
         const tar = document.querySelector('.control-operation').children[0]
         operation['record-speed'](tar)
+    }
+    else if(e.keyCode===82){
+        const tar = document.querySelector('.control-operation').children[0]
+        operation['reset'](tar)
     }
 }
 const renderList = ()=>{
