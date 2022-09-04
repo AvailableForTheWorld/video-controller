@@ -1,5 +1,6 @@
 window.onload = init
-const timeMap = new Set()
+const timeMap =sessionStorage.getItem('timeMap')? new Set(Array.from(sessionStorage.getItem('timeMap').split(',')).map(Number)) : new Set()
+console.log(timeMap)
 function init () {
     const videoList = document.getElementsByTagName('video')
     const arrList = Array.from(videoList)
@@ -39,6 +40,8 @@ function init () {
             aside.addEventListener('click',goto)
             document.addEventListener('keyup', keyboard)
         // }
+
+        renderList()
     })
 }
 const operation = {
@@ -63,8 +66,9 @@ const operation = {
     },
     save: (target)=>{    
         const tar = target.parentElement.parentElement.parentElement.parentElement.getElementsByTagName('video')[0]
-        let time = tar.currentTime
+        let time = formateSecond(formateTime(tar.currentTime))
         timeMap.add(time)
+        sessionStorage.setItem('timeMap',Array.from(timeMap))
         renderList()
     }
 }
@@ -106,14 +110,25 @@ const renderList = ()=>{
     list.innerHTML=''
     for(let t of timeMap){
         // list.innerHTML+=`<li><button>${t}</button></li>`  
-        list.innerHTML+=`<li><button>${formateTime(t)}</button></li>`  
+        list.innerHTML+=`<li><button>${formateTime(t)}</button><button class="deletetime">×</button></li>`  
     }
 }
 const goto=(e)=>{
     e.stopPropagation();
-    let video = document.getElementsByTagName('video')[0]
-    // video.currentTime=e.target.innerText
-    video.currentTime=formateSecond(e.target.innerText)
+    if( e.target.classList.contains("deletetime")){
+        let deltime = formateSecond(e.target.previousSibling.innerText)
+        console.log(deltime)
+        timeMap.delete(deltime)
+        sessionStorage.setItem('timeMap',Array.from(timeMap))
+        console.log(timeMap)
+        renderList()
+     }
+     else{
+        let video = document.getElementsByTagName('video')[0]
+        // video.currentTime=e.target.innerText
+        video.currentTime=formateSecond(e.target.innerText)
+     }
+
 }
 const formateTime = (time)=>{
     const h = parseInt(time / 3600)
@@ -140,4 +155,4 @@ const formateSecond = (time)=>{
         tt =Number(min*60) + Number(sec);
     }
     return tt;
-};
+}
