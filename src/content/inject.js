@@ -1,12 +1,13 @@
 window.onload = init
 const timeMap =sessionStorage.getItem('timeMap')? new Set(Array.from(sessionStorage.getItem('timeMap').split(',')).map(Number)) : new Set()
-console.log(timeMap)
 function init () {
     const videoList = document.getElementsByTagName('video')
     const arrList = Array.from(videoList)
+    const speedMarkUrl = chrome.runtime.getURL("/src/assets/images/speed-mark.svg")
     arrList.map((item,index)=>{
         const wrapper = document.createElement("div");
         const aside = document.createElement("div");
+        const speedListAside = document.createElement("aside")
         wrapper.classList.add("video-controller-container");
         const boxTemplate = `
             <div class="video-controller">
@@ -17,6 +18,7 @@ function init () {
                     <button data-op="faster">+</button>
                     <button data-op="fast-forward">»</button>
                     <button data-op="mark">mark</buttom>
+                    <button data-op="record-speed">record-speed</button>
                 </div>
             </div>
         `;
@@ -25,10 +27,14 @@ function init () {
     
         let asideul = document.createElement('ul')
         asideul.classList.add('time-list')
+        const speedListUl = document.createElement('ul')
+        speedListAside.classList.add('speed-list')
+        speedListUl.classList.add('speed-list-ul')
         aside.appendChild(asideul)
-    
+        speedListAside.appendChild(speedListUl);
         item.parentElement.insertBefore(wrapper,item)
         item.parentElement.insertBefore(aside,item)
+        item.parentElement.insertBefore(speedListAside,item)
         // window.onload = ()=>{
             wrapper.addEventListener('mouseenter',showControllerBtn)
             wrapper.addEventListener('mouseleave',hideControllerBtn)
@@ -38,15 +44,16 @@ function init () {
             dragPatch.patch(wrapper) // 非纯函数，修改了dom
     
             aside.addEventListener('click',goto)
+            speedListAside.addEventListener('click',gotoSpeed)
             document.addEventListener('keyup', keyboard)
         // }
 
         renderList()
+        renderSpeedList(speedListUl)
     })
 }
 const operation = {
     faster: (target)=>{
-        console.log("target.parentElement.parentElement.parentElement.parentElement",target.parentElement.parentElement.parentElement.parentElement)
         const tar = target.parentElement.parentElement.parentElement.parentElement.getElementsByTagName('video')[0]
         tar.playbackRate = Math.round((tar.playbackRate+0.1)*10)/10
         target.parentElement.parentElement.querySelector('.speed-text').innerText = tar.playbackRate.toFixed(1)
@@ -70,6 +77,22 @@ const operation = {
         timeMap.add(time)
         sessionStorage.setItem('timeMap',Array.from(timeMap))
         renderList()
+    },
+    "record-speed": (target)=>{
+        const tar = target.parentElement.parentElement.parentElement.parentElement;
+        const sessions = JSON.parse(sessionStorage.getItem('speed_list'));
+        let speedList = sessions?sessions:[];
+        const item = tar.getElementsByTagName('video')[0].playbackRate.toFixed(1);
+        if(!speedList.includes(item)){
+            speedList.push(item);
+        }
+        sessionStorage.setItem('speed_list',JSON.stringify(speedList))
+        renderSpeedList(tar.querySelector('.speed-list-ul'))
+    },
+    reset: (target)=> {
+        const tar = target.parentElement.parentElement.parentElement.parentElement;
+        tar.getElementsByTagName('video')[0].playbackRate = 1.0;
+        tar.querySelector('.speed-text').innerText = "1.0"
     }
 }
 
@@ -92,17 +115,25 @@ const hideControllerBtn = (e)=>{
     ele.classList.add('video-controller-hide')
 }
 const keyboard = (e)=>{
-    if(e.keyCode=='68'){
-        let video = document.getElementsByTagName('video')[0]
-        operation.faster(video)
+    if(e.keyCode===68){
+        const tar = document.querySelector('.control-operation').children[0];
+        operation.faster(tar)
     }
-    if(e.keyCode=='65'){
-        let video = document.getElementsByTagName('video')[0]
-        operation.slower(video)
+    else if(e.keyCode===65){
+        const tar = document.querySelector('.control-operation').children[0]
+        operation.slower(tar)
     }
-    if(e.keyCode=='83'){
-        let video = document.getElementsByTagName('video')[0]
-        operation.mark(video)
+    else if(e.keyCode===83){
+        const tar = document.querySelector('.control-operation').children[0]
+        operation.mark(tar)
+    }
+    else if(e.keyCode===90){
+        const tar = document.querySelector('.control-operation').children[0]
+        operation['record-speed'](tar)
+    }
+    else if(e.keyCode===82){
+        const tar = document.querySelector('.control-operation').children[0]
+        operation['reset'](tar)
     }
 }
 const renderList = ()=>{
@@ -113,22 +144,40 @@ const renderList = ()=>{
         list.innerHTML+=`<li><button>${formateTime(t)}</button><button class="deletetime">×</button></li>`  
     }
 }
+const renderSpeedList = (target)=>{
+    const sessions = JSON.parse(sessionStorage.getItem('speed_list'));
+    target.innerHTML = ''
+    sessions.map((item)=>{
+        target.innerHTML += `<li><button>${item}</button><button class="delete-speed-list">×</button></li>`
+    })
+}
 const goto=(e)=>{
     e.stopPropagation();
     if( e.target.classList.contains("deletetime")){
         let deltime = formateSecond(e.target.previousSibling.innerText)
-        console.log(deltime)
         timeMap.delete(deltime)
         sessionStorage.setItem('timeMap',Array.from(timeMap))
-        console.log(timeMap)
         renderList()
      }
      else{
-        let video = document.getElementsByTagName('video')[0]
+        let video = c
         // video.currentTime=e.target.innerText
         video.currentTime=formateSecond(e.target.innerText)
      }
 
+}
+const gotoSpeed = (e)=>{
+    e.stopPropagation();
+    if(e.target.classList.contains("delete-speed-list")) {
+        const arr = JSON.parse(sessionStorage.getItem('speed_list')).filter((item)=> item!==e.target.previousSibling.innerText)
+        sessionStorage.setItem('speed_list',JSON.stringify(arr));
+        renderSpeedList(e.target.parentElement.parentElement);
+    }
+    else {
+        const video = document.getElementsByTagName('video')[0];
+        video.playbackRate = Number(e.target.innerText);
+        document.querySelector('.speed-text').innerText = e.target.innerText;
+    }
 }
 const formateTime = (time)=>{
     const h = parseInt(time / 3600)
