@@ -160,7 +160,7 @@ const goto=(e)=>{
         renderList()
      }
      else{
-        let video = c
+        let video = document.getElementsByTagName('video')[0]
         // video.currentTime=e.target.innerText
         video.currentTime=formateSecond(e.target.innerText)
      }

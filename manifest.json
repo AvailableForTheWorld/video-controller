@@ -6,17 +6,17 @@
     "action": {
         "default_popup": "./src/popup/popup.html",
         "default_icon": {
-            "16": "./src/assets/images/get_started16.png",
-            "32": "./src/assets/images/get_started32.png",
-            "48": "./src/assets/images/get_started48.png",
-            "128": "./src/assets/images/get_started128.png"
+            "16": "./src/assets/images/video-icon-16.png",
+            "32": "./src/assets/images/video-icon-32.png",
+            "48": "./src/assets/images/video-icon-48.png",
+            "128": "./src/assets/images/video-icon-128.png"
         }
     },
     "icons": {
-        "16": "./src/assets/images/get_started16.png",
-        "32": "./src/assets/images/get_started32.png",
-        "48": "./src/assets/images/get_started48.png",
-        "128": "./src/assets/images/get_started128.png"
+        "16": "./src/assets/images/video-icon-16.png",
+        "32": "./src/assets/images/video-icon-32.png",
+        "48": "./src/assets/images/video-icon-48.png",
+        "128": "./src/assets/images/video-icon-128.png"
       },
     "commands": {
         "_execute_action": {
@@ -24,11 +24,8 @@
                     "default": "Ctrl+Shift+F",
                     "mac": "MacCtrl+Shift+F"
                 },
-            "description": "Opens hello.html"
+            "description": "show popup"
         }
-    },
-    "background": {
-        "service_worker": "./src/service/background.js"
     },
     "content_scripts": [
         {
