@@ -1,65 +1,69 @@
-const videoList = document.getElementsByTagName('video')
-const arrList = Array.from(videoList)
-const timeMap = new Set()
-arrList.map((item,index)=>{
-    const wrapper = document.createElement("div");
-    const aside = document.createElement("div");
-    wrapper.classList.add("video-controller-container");
-    const boxTemplate = `
-        <div class="video-controller">
-            <div class="speed-text">${item.playbackRate.toFixed(1)}</div>
-            <div class="control-operation video-controller-hide">
-                <button data-op="fall-back">«</button>
-                <button data-op="slower">-</button>
-                <button data-op="faster">+</button>
-                <button data-op="fast-forward">»</button>
-                <button data-op="save">save</buttom>
+window.onload = init
+function init () {
+    const videoList = document.getElementsByTagName('video')
+    const arrList = Array.from(videoList)
+    const timeMap = new Set()
+    arrList.map((item,index)=>{
+        const wrapper = document.createElement("div");
+        const aside = document.createElement("div");
+        wrapper.classList.add("video-controller-container");
+        const boxTemplate = `
+            <div class="video-controller">
+                <div class="speed-text">${item.playbackRate.toFixed(1)}</div>
+                <div class="control-operation video-controller-hide">
+                    <button data-op="fall-back">«</button>
+                    <button data-op="slower">-</button>
+                    <button data-op="faster">+</button>
+                    <button data-op="fast-forward">»</button>
+                    <button data-op="save">save</buttom>
+                </div>
             </div>
-        </div>
-    `;
-
-    wrapper.innerHTML = boxTemplate;
-
-    let asideul = document.createElement('ul')
-    asideul.classList.add('time-list')
-    aside.appendChild(asideul)
-
-    item.parentElement.insertBefore(wrapper,item)
-    item.parentElement.insertBefore(aside,item)
-    window.onload = ()=>{
-        wrapper.addEventListener('mouseenter',showControllerBtn)
-        wrapper.addEventListener('mouseleave',hideControllerBtn)
-        const controllerOperation = wrapper.querySelector('.control-operation')
-        controllerOperation.addEventListener('click',handleClick)
-        controllerOperation.addEventListener('dblclick',stopProp)
-        dragPatch.patch(wrapper) // 非纯函数，修改了dom
-
-        aside.addEventListener('click',goto)
-        document.addEventListener('keyup', keyboard)
-    }
-})
+        `;
+    
+        wrapper.innerHTML = boxTemplate;
+    
+        let asideul = document.createElement('ul')
+        asideul.classList.add('time-list')
+        aside.appendChild(asideul)
+    
+        item.parentElement.insertBefore(wrapper,item)
+        item.parentElement.insertBefore(aside,item)
+        // window.onload = ()=>{
+            wrapper.addEventListener('mouseenter',showControllerBtn)
+            wrapper.addEventListener('mouseleave',hideControllerBtn)
+            const controllerOperation = wrapper.querySelector('.control-operation')
+            controllerOperation.addEventListener('click',handleClick)
+            controllerOperation.addEventListener('dblclick',stopProp)
+            dragPatch.patch(wrapper) // 非纯函数，修改了dom
+    
+            aside.addEventListener('click',goto)
+            document.addEventListener('keyup', keyboard)
+        // }
+    })
+}
 const operation = {
     faster: (target)=>{
-        const tar = target.parentElement.parentElement.parentElement.parentElement
-        tar.getElementsByTagName('video')[0].playbackRate = Math.round((videoList[0].playbackRate+0.1)*10)/10
-        target.parentElement.parentElement.querySelector('.speed-text').innerText = videoList[0].playbackRate.toFixed(1)
+        console.log("target.parentElement.parentElement.parentElement.parentElement",target.parentElement.parentElement.parentElement.parentElement)
+        const tar = target.parentElement.parentElement.parentElement.parentElement.getElementsByTagName('video')[0]
+        tar.playbackRate = Math.round((tar.playbackRate+0.1)*10)/10
+        target.parentElement.parentElement.querySelector('.speed-text').innerText = tar.playbackRate.toFixed(1)
     },
     slower: (target)=>{
-        const tar = target.parentElement.parentElement.parentElement.parentElement
-        tar.getElementsByTagName('video')[0].playbackRate = Math.round((videoList[0].playbackRate-0.1)*10)/10
-        target.parentElement.parentElement.querySelector('.speed-text').innerText = videoList[0].playbackRate.toFixed(1)
+        const tar = target.parentElement.parentElement.parentElement.parentElement.getElementsByTagName('video')[0]
+        tar.playbackRate = Math.round((tar.playbackRate-0.1)*10)/10
+        target.parentElement.parentElement.querySelector('.speed-text').innerText = tar.playbackRate.toFixed(1)
     },
     "fall-back": (target)=>{
-        const tar = target.parentElement.parentElement.parentElement.parentElement
-        tar.getElementsByTagName('video')[0].currentTime -= 10;
+        const tar = target.parentElement.parentElement.parentElement.parentElement.getElementsByTagName('video')[0]
+        tar.currentTime -= 10;
     },
     "fast-forward": (target)=>{
-        const tar = target.parentElement.parentElement.parentElement.parentElement
-        tar.getElementsByTagName('video')[0].currentTime += 10;
+        const tar = target.parentElement.parentElement.parentElement.parentElement.getElementsByTagName('video')[0]
+        tar.currentTime += 10;
     },
     save: (target)=>{
-        const tar = target.parentElement.parentElement.parentElement.parentElement
-        let time = tar.getElementsByTagName('video')[0].currentTime
+        const tar = target.parentElement.parentElement.parentElement.parentElement.getElementsByTagName('video')[0]
+        let time = tar.currentTime
         timeMap.add(time)
         renderList()
     }
