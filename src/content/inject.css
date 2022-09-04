@@ -3,8 +3,8 @@
     height: fit-content;
     position: absolute;
     top: 40px;
-    right: 50%;
-    transform: translateX(50%);
+    left: 50%;
+    transform: translateX(-50%);
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 4px;
     z-index: 100001;
@@ -46,6 +46,13 @@
 }
 .video-controller .video-controller-hide {
     display: none;
+}
+/* 公共隐藏展示方法 */
+.hide {
+    opacity: 0;
+}
+.show{
+    visibility: visible;
 }
 
 .time-list{
