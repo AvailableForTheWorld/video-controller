@@ -1,8 +1,8 @@
 window.onload = init
+const timeMap = new Set()
 function init () {
     const videoList = document.getElementsByTagName('video')
     const arrList = Array.from(videoList)
-    const timeMap = new Set()
     arrList.map((item,index)=>{
         const wrapper = document.createElement("div");
         const aside = document.createElement("div");
@@ -61,7 +61,7 @@ const operation = {
         const tar = target.parentElement.parentElement.parentElement.parentElement.getElementsByTagName('video')[0]
         tar.currentTime += 10;
     },
-    save: (target)=>{
+    save: (target)=>{    
         const tar = target.parentElement.parentElement.parentElement.parentElement.getElementsByTagName('video')[0]
         let time = tar.currentTime
         timeMap.add(time)
@@ -73,7 +73,7 @@ const stopProp = (e)=>{
     e.stopPropagation();
 }
 const handleClick = (e)=>{
-    if(e.target=='font') return
+    if(e.target.nodeName!=='BUTTON') return
     e.stopPropagation();
     operation[e.target.dataset['op']](e.target);
 }
