@@ -168,7 +168,7 @@ const goto=(e)=>{
 }
 const gotoSpeed = (e)=>{
     e.stopPropagation();
-    if(e.target.classList.contains("delete-speed-list")) {
+    if(e.target.classList.contains("delete-speed-list")&&sessionStorage.getItem('speed_list')) {
         const arr = JSON.parse(sessionStorage.getItem('speed_list')).filter((item)=> item!==e.target.previousSibling.innerText)
         sessionStorage.setItem('speed_list',JSON.stringify(arr));
         renderSpeedList(e.target.parentElement.parentElement);
