@@ -21,4 +21,24 @@ let settings = {
 // chrome.storage.sync.get(['settings'],function(res){
 //     console.log("now the settings is: ",res.settings)
 // })
-chrome.storage.sync.set({settings:settings})
+window.onload = function(){
+    const keyBindings = Array.from(document.getElementsByClassName('keyBind'));
+    keyBindings.map((item)=>{
+        item.addEventListener('focus',function(e){
+            e.target.value = ''
+        })
+        item.addEventListener('keydown',function(e){
+            
+        })
+        item.addEventListener('change',function(e){
+            console.log("changed",e.target.value)
+            if(e.target.value.length<=1&&e.target.value.charCodeAt()>=97&&e.target.value.charCodeAt()<=122){
+                e.target.value = String.fromCharCode(e.target.value.charCodeAt()-32)
+            }
+            settings[e.target.dataset['key']].key = e.target.value;
+            chrome.storage.sync.set({settings:settings},function(){
+                console.log("the dataset is setted",settings)
+            })
+        })
+    })
+}

@@ -147,23 +147,24 @@ const hideControllerBtn = (e)=>{
     ele.classList.add('video-controller-hide')
 }
 const keyboard = (e)=>{
-    if(e.keyCode===68){
+    console.log(e.keyCode,settings.increaseSpeed.key.charCodeAt())
+    if(e.keyCode===settings.increaseSpeed.key.charCodeAt()){
         const tar = document.querySelector('.control-operation').children[0];
         operation.faster(tar)
     }
-    else if(e.keyCode===65){
+    else if(e.keyCode===settings.decreaseSpeed.key.charCodeAt()){
         const tar = document.querySelector('.control-operation').children[0]
         operation.slower(tar)
     }
-    else if(e.keyCode===83){
+    else if(e.keyCode===settings.markMoment.key.charCodeAt()){
         const tar = document.querySelector('.control-operation').children[0]
         operation.mark(tar)
     }
-    else if(e.keyCode===90){
+    else if(e.keyCode===settings.markRate.key.charCodeAt()){
         const tar = document.querySelector('.control-operation').children[0]
         operation['record-speed'](tar)
     }
-    else if(e.keyCode===82){
+    else if(e.keyCode===settings.resetSpeed.key.charCodeAt()){
         const tar = document.querySelector('.control-operation').children[0]
         operation['reset'](tar)
     }
