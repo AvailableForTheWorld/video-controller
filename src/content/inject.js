@@ -1,6 +1,32 @@
 window.onload = init
+let settings = {
+    increaseSpeed: {
+        key: 'D',
+        step: 0.1,
+    },
+    decreaseSpeed: {
+        key: 'A',
+        step: 0.1,
+    },
+    resetSpeed: {
+        key: 'R',
+        value: 1,
+    },
+    markMoment: {
+        key: 'S',
+    },
+    markRate: {
+        key: 'Z',
+    }
+}
 const timeMap =sessionStorage.getItem('timeMap')? new Set(Array.from(sessionStorage.getItem('timeMap').split(',')).map(Number)) : new Set()
 function init () {
+    chrome.storage.sync.get('settings',function (res) {
+        if(Object.keys(res).length){
+            settings = res.settings;
+            console.log("in inject.js the settings is: ",settings)
+        }
+    })
     const videoList = document.getElementsByTagName('video')
     const arrList = Array.from(videoList)
     const speedMarkUrl = chrome.runtime.getURL("/src/assets/images/speed-mark.svg")
@@ -94,6 +120,12 @@ const operation = {
         tar.getElementsByTagName('video')[0].playbackRate = 1.0;
         tar.querySelector('.speed-text').innerText = "1.0"
     }
+}
+
+const setSettings = (settings)=>{
+    chrome.storage.sync.set({settings:settings},function(){
+        console.log("settings have changed!!!")
+    })
 }
 
 const stopProp = (e)=>{
