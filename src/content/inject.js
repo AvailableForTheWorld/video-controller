@@ -145,11 +145,13 @@ const renderList = ()=>{
     }
 }
 const renderSpeedList = (target)=>{
-    const sessions = JSON.parse(sessionStorage.getItem('speed_list'));
-    target.innerHTML = ''
-    sessions.map((item)=>{
-        target.innerHTML += `<li><button>${item}</button><button class="delete-speed-list">×</button></li>`
-    })
+    if(sessionStorage.getItem('speed_list')){
+        const sessions = JSON.parse(sessionStorage.getItem('speed_list'));
+        target.innerHTML = ''
+        sessions.map((item)=>{
+            target.innerHTML += `<li><button>${item}</button><button class="delete-speed-list">×</button></li>`
+        })
+    }
 }
 const goto=(e)=>{
     e.stopPropagation();
