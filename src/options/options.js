@@ -39,4 +39,25 @@ window.onload = function(){
             })
         })
     })
+
+    document.getElementById("fast-step").onchange=((e)=>{
+        settings.increaseSpeed.step = Number(e.target.value)<=2 ? +Number(e.target.value).toFixed(1):2
+        e.target.value = settings.increaseSpeed.step
+        chrome.storage.sync.set({settings:settings})
+        console.log(settings)
+    })
+    document.getElementById("slow-step").onchange=((e)=>{
+        settings.decreaseSpeed.step = Number(e.target.value)<=2 ? +Number(e.target.value).toFixed(1):2
+        e.target.value = settings.decreaseSpeed.step
+        chrome.storage.sync.set({settings:settings})
+        console.log(settings)
+    })
+    document.getElementById("reset-value").onchange=((e)=>{
+        settings.resetSpeed.value = Number(e.target.value)<=16 ? Number(e.target.value).toFixed(1):16
+        e.target.value = settings.resetSpeed.value
+        chrome.storage.sync.set({settings:settings})
+        console.log(settings)
+    })
+    chrome.storage.sync.set({settings:settings})
+    
 }
