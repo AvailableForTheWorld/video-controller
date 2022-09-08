@@ -71,7 +71,7 @@ function init () {
     
             aside.addEventListener('click',goto)
             speedListAside.addEventListener('click',gotoSpeed)
-            document.addEventListener('keyup', keyboard)
+            document.addEventListener('keydown', keyboard)
         // }
 
         renderList()
