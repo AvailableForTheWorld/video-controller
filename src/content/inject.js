@@ -81,11 +81,17 @@ function init () {
 const operation = {
     faster: (target)=>{
         const tar = target.parentElement.parentElement.parentElement.parentElement.getElementsByTagName('video')[0]
+        if(tar.playbackRate>=16){
+            return;
+        }
         tar.playbackRate = Math.round((tar.playbackRate+0.1)*10)/10
         target.parentElement.parentElement.querySelector('.speed-text').innerText = tar.playbackRate.toFixed(1)
     },
     slower: (target)=>{
         const tar = target.parentElement.parentElement.parentElement.parentElement.getElementsByTagName('video')[0]
+        if(tar.playbackRate==0){
+            return;
+        }
         tar.playbackRate = Math.round((tar.playbackRate-0.1)*10)/10
         target.parentElement.parentElement.querySelector('.speed-text').innerText = tar.playbackRate.toFixed(1)
     },
