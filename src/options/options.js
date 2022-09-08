@@ -27,13 +27,11 @@ window.onload = function(){
         item.addEventListener('focus',function(e){
             e.target.value = ''
         })
-        item.addEventListener('keydown',function(e){
-            
-        })
-        item.addEventListener('change',function(e){
-            console.log("changed",e.target.value)
+        item.addEventListener('input',function(e){
+            console.log("inputed",e.target.value)
             if(e.target.value.length<=1&&e.target.value.charCodeAt()>=97&&e.target.value.charCodeAt()<=122){
                 e.target.value = String.fromCharCode(e.target.value.charCodeAt()-32)
+                e.target.blur()
             }
             settings[e.target.dataset['key']].key = e.target.value;
             chrome.storage.sync.set({settings:settings},function(){
