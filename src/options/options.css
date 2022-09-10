@@ -24,3 +24,6 @@ body{
   text-align: center;
   caret-color: transparent;
 }
+.hotkey-ul li .step{
+  caret-color:auto;
+}
