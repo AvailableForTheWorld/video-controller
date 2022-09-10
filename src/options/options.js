@@ -18,9 +18,10 @@ let settings = {
         key: 'Z',
     }
 }
-// chrome.storage.sync.get(['settings'],function(res){
-//     console.log("now the settings is: ",res.settings)
-// })
+chrome.storage.sync.get(['settings'],function(res){
+    settings = Object.keys(res.settings).length?res.settings:settings
+    console.log(settings)
+})
 window.onload = function(){
     const keyBindings = Array.from(document.getElementsByTagName('input'));
     let cache = ''

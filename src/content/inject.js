@@ -84,7 +84,7 @@ const operation = {
         if(tar.playbackRate>=16){
             return;
         }
-        tar.playbackRate = Math.round((tar.playbackRate+0.1)*10)/10
+        tar.playbackRate = Math.round((tar.playbackRate+settings.increaseSpeed.step)*10)/10
         target.parentElement.parentElement.querySelector('.speed-text').innerText = tar.playbackRate.toFixed(1)
     },
     slower: (target)=>{
@@ -92,7 +92,7 @@ const operation = {
         if(tar.playbackRate==0){
             return;
         }
-        tar.playbackRate = Math.round((tar.playbackRate-0.1)*10)/10
+        tar.playbackRate = Math.round((tar.playbackRate-settings.decreaseSpeed.step)*10)/10
         target.parentElement.parentElement.querySelector('.speed-text').innerText = tar.playbackRate.toFixed(1)
     },
     "fall-back": (target)=>{
@@ -123,8 +123,8 @@ const operation = {
     },
     reset: (target)=> {
         const tar = target.parentElement.parentElement.parentElement.parentElement;
-        tar.getElementsByTagName('video')[0].playbackRate = 1.0;
-        tar.querySelector('.speed-text').innerText = "1.0"
+        tar.getElementsByTagName('video')[0].playbackRate = settings.resetSpeed.value;
+        tar.querySelector('.speed-text').innerText = String(settings.resetSpeed.value)
     }
 }
 
