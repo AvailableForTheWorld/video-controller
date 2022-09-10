@@ -22,42 +22,38 @@ let settings = {
 //     console.log("now the settings is: ",res.settings)
 // })
 window.onload = function(){
-    const keyBindings = Array.from(document.getElementsByClassName('keyBind'));
+    const keyBindings = Array.from(document.getElementsByTagName('input'));
+    let cache = ''
     keyBindings.map((item)=>{
         item.addEventListener('focus',function(e){
+            cache = e.target.value;
             e.target.value = ''
         })
-        item.addEventListener('input',function(e){
-            console.log("inputed",e.target.value)
-            if(e.target.value.length<=1&&e.target.value.charCodeAt()>=97&&e.target.value.charCodeAt()<=122){
-                e.target.value = String.fromCharCode(e.target.value.charCodeAt()-32)
-                e.target.blur()
+        item.addEventListener('blur',function(e){
+            if(!e.target.value){
+                e.target.value = cache;
             }
-            settings[e.target.dataset['key']].key = e.target.value;
-            chrome.storage.sync.set({settings:settings},function(){
-                console.log("the dataset is setted",settings)
-            })
+        })
+        item.addEventListener('input',function(e){
+            if(e.target.classList.contains('keyBind')){
+                console.log("inputed",e.target.value)
+                if(e.target.value.length<=1&&e.target.value.charCodeAt()>=97&&e.target.value.charCodeAt()<=122){
+                    e.target.value = String.fromCharCode(e.target.value.charCodeAt()-32)
+                    e.target.blur()
+                }
+                settings[e.target.dataset['key']].key = e.target.value;
+                chrome.storage.sync.set({settings:settings},function(){
+                    console.log("the dataset is setted",settings)
+                })
+            }
+            else{
+                let targetValue = e.target.dataset['step'] === 'resetSpeed' ? 16 : 2;
+                settings[e.target.dataset['step']].step = parseFloat(e.target.value)<=targetValue ? +parseFloat(e.target.value).toFixed(1):targetValue;
+                e.target.value = e.target.value.indexOf('.')===e.target.value.lastIndexOf('.')?e.target.value.indexOf('.')===e.target.value.length-1?e.target.value:settings[e.target.dataset['step']].step:settings[e.target.dataset['step']].step
+                chrome.storage.sync.set({settings:settings})
+                console.log(settings)
+            }
         })
     })
-
-    document.getElementById("fast-step").onchange=((e)=>{
-        settings.increaseSpeed.step = Number(e.target.value)<=2 ? +Number(e.target.value).toFixed(1):2
-        e.target.value = settings.increaseSpeed.step
-        chrome.storage.sync.set({settings:settings})
-        console.log(settings)
-    })
-    document.getElementById("slow-step").onchange=((e)=>{
-        settings.decreaseSpeed.step = Number(e.target.value)<=2 ? +Number(e.target.value).toFixed(1):2
-        e.target.value = settings.decreaseSpeed.step
-        chrome.storage.sync.set({settings:settings})
-        console.log(settings)
-    })
-    document.getElementById("reset-value").onchange=((e)=>{
-        settings.resetSpeed.value = Number(e.target.value)<=16 ? Number(e.target.value).toFixed(1):16
-        e.target.value = settings.resetSpeed.value
-        chrome.storage.sync.set({settings:settings})
-        console.log(settings)
-    })
     chrome.storage.sync.set({settings:settings})
-    
 }
